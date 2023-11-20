@@ -8,10 +8,9 @@ new_user_info = (username, user_age, user_secrets)
 
 try:
     if print_secret == "Y" or print_secret == "y":
-        print(new_user_info)
+        print(print_secret)
 
     else:
         print ("your secret is safe with me")
 except TypeError:
     print("Please enter a valid input (Y/N): ")
-

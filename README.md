@@ -1,5 +1,5 @@
 ```markdown
-# Bookstore Management System
+# E-bookstore Management System
 
 This project is a simple console-based bookstore management system implemented in Python using SQLite for data storage. It allows users to perform basic operations like adding, updating, searching, deleting books, and viewing the entire book inventory.
 

@@ -64,7 +64,7 @@ class Book:
             print(f"an error occured: {e}")
 
 
-    #method to update existing books stored in the database
+    # method to update existing books stored in the database
     def update_book(self, cursor):
         try:
             print("To update book please enter the title and author of the book")
@@ -85,20 +85,56 @@ class Book:
                 print("No books found with the given title or author.")
             else:
                 if change_book_confirm == "Y" or change_book_confirm == "Yes":
-                    new_title = input("Enter updated book title: ")
-                    new_author = input("Enter updated Author's name: ")
-                    new_qty = int(input("Enter updated quantity avilable: "))
+                    while True:
+                        print("What would you like to update?")
+                        print("1. Title")
+                        print("2. Author")
+                        print("3. Quantity")
+                        print("4. Exit")
+                        choice = input("Enter your choice: ")
 
-                    update_query = '''
-                    UPDATE book
-                    SET title=?, author=?, qty=?
-                    WHERE title=? AND author=?
-                    ''' 
-                    new_book_values = (new_title, new_author, new_qty, current_title, current_author)
-                    cursor.execute(update_query, new_book_values)
-                    self.db_connection.commit()
+                        if choice == '1':
+                            new_title = input("Enter updated book title: ")
+                            update_query = '''
+                            UPDATE book
+                            SET title=?
+                            WHERE title=? AND author=?
+                            ''' 
+                            new_book_values = (new_title, current_title, current_author)
+                            cursor.execute(update_query, new_book_values)
+                            self.db_connection.commit()
+                            print("Title updated successfully!")
 
-                    print("Book added succesfully!")
+                        elif choice == '2':
+                            new_author = input("Enter updated Author's name: ")
+                            update_query = '''
+                            UPDATE book
+                            SET author=?
+                            WHERE title=? AND author=?
+                            ''' 
+                            new_book_values = (new_author, current_title, current_author)
+                            cursor.execute(update_query, new_book_values)
+                            self.db_connection.commit()
+                            print("Author updated successfully!")
+
+                        elif choice == '3':
+                            new_qty = int(input("Enter updated quantity available: "))
+                            update_query = '''
+                            UPDATE book
+                            SET qty=?
+                            WHERE title=? AND author=?
+                            ''' 
+                            new_book_values = (new_qty, current_title, current_author)
+                            cursor.execute(update_query, new_book_values)
+                            self.db_connection.commit()
+                            print("Quantity updated successfully!")
+
+                        elif choice == '4':
+                            break
+
+                        else:
+                            print("Invalid choice. Please enter a number between 1 and 4.")
+
                 elif change_book_confirm == "N" or change_book_confirm == "No": 
                     print("Update canceled. Please try again.")
                 else:
@@ -108,7 +144,6 @@ class Book:
             pass
         except Exception as e:
                 print(f"An error occurred: {e}")
-            
 
 
     #method for the user to search for a specific book in database
